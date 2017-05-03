@@ -14,17 +14,29 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Diagnostics;
 
-//using System.Windows;
-//using System.Management;
-
 namespace Podstawy_teleinformatyki_Serwer
 {
     public partial class Form2 : Form
     {
         public readonly int portNumber;
         private TcpClient client;
+        private TcpClient client2;
+        private TcpClient client3;
         private TcpListener server;
         private NetworkStream mainStream;
+        private NetworkStream mainStream2;
+        private NetworkStream mainStream3;
+
+        ////////////
+        private TcpClient klientproc;
+        private TcpListener serverproc;
+        NetworkStream netStream;
+
+        private TcpClient klientproc2;
+        NetworkStream netStream2;
+
+        private readonly Thread GetProcess;
+        ////////////
 
         private readonly Thread Listetning;
         private readonly Thread GetImage;
@@ -40,6 +52,8 @@ namespace Podstawy_teleinformatyki_Serwer
         {
             portNumber = port;
             client = new TcpClient();
+            client2 = new TcpClient();
+            client3 = new TcpClient();
             Listetning = new Thread(StartListening);
             GetImage = new Thread(ReceiveImage);
             InitializeComponent();
@@ -47,12 +61,21 @@ namespace Podstawy_teleinformatyki_Serwer
 
         private void StartListening()
         {
-            while (!client.Connected)
+            while (!client.Connected || !klientproc.Connected)
             {
                 server.Start();
+                serverproc.Start();
                 client = server.AcceptTcpClient();
+                klientproc = serverproc.AcceptTcpClient();
             }
             GetImage.Start();
+            while (!client2.Connected || !klientproc2.Connected)
+            {
+                client2 = server.AcceptTcpClient();
+
+                klientproc2 = serverproc.AcceptTcpClient();
+            }
+            ReceiveImage2();    
         }
 
         private void StopListening()
@@ -60,87 +83,80 @@ namespace Podstawy_teleinformatyki_Serwer
             server.Stop();
             client = null;
 
+            ///////
+            serverproc.Stop();
+            klientproc = null;
+            ///////
+
             if (Listetning.IsAlive) Listetning.Abort();
             if (GetImage.IsAlive) GetImage.Abort();
+
+            ///////
+            if (GetProcess.IsAlive) GetProcess.Abort();
+            ///////
         }
 
         private void ReceiveImage()
         {
             BinaryFormatter binFormatter = new BinaryFormatter();
+            BinaryFormatter binFormatter2 = new BinaryFormatter();
 
             while (client.Connected)
             {
                 mainStream = client.GetStream();
-                pictureBox1.Image = (Image)binFormatter.Deserialize(mainStream);
-                pictureBox2.Image = (Image)binFormatter.Deserialize(mainStream);
-                pictureBox3.Image = (Image)binFormatter.Deserialize(mainStream);
-
-               // label1.Text = Dns.GetHostEntry("192.168.43.179").HostName.ToString();
-                label1.Invoke(new MethodInvoker(delegate { label1.Text = Dns.GetHostEntry(((IPEndPoint)client.Client.RemoteEndPoint).Address).HostName.ToString(); }));
-                
-                ///////////////////////////////////////////////
-                // Pobieranie procesow
-               
-                if (refr % 50 == 0)
+                if (radioButton1.Checked)
                 {
-                    listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Clear(); }));
-                    ArrayList alist = new ArrayList();
-                    
-                    //Process[] processes = Process.GetProcesses("DESKTOP-UCD1E8F");
-                    //Process[] processes = Process.GetProcesses("USER2-KOMPUTER");
-                    //Process[] processes = Process.GetProcesses("192.168.1.15");
-                    //Process[] processes = Process.GetProcesses("192.168.56.2");
-                    Process[] processes = Process.GetProcesses(Dns.GetHostEntry(((IPEndPoint)client.Client.RemoteEndPoint).Address).HostName.ToString());
-                    bool CzySyst = true;
-                    int i = 0;
-                    foreach (Process process in processes)
+                    pictureBox1.Image = (Image)binFormatter.Deserialize(mainStream);
+                    ///////////////////////////////////////////////
+                    // Pobieranie procesow
+                    if (refr % 50 == 0)
                     {
-
-                        alist.Add(process.ProcessName);
-                        
-                        ListViewItem item = new ListViewItem(alist[i].ToString());
-                        item.ForeColor = Color.Green;
-                        ///////////////////////////////////////
-
-                        for (int g = 0; g < ProcSys.Length;g++)
-                        {
-                            if (alist[i].ToString() == ProcSys[g].ToString())
-                            {
-                                item.ForeColor = Color.Green;
-                                item.SubItems.Add("Systemowy");
-                                CzySyst = true;
-                                break;
-                            }
-                            else
-                            {
-                                CzySyst = false;
-                            }
-                        }
-                        if (CzySyst == false)
-                        {
-                            item.ForeColor = Color.Red;
-                            item.SubItems.Add("Inny");
-                        }
-                        
-                        ////////////////////////////////////////
-                        listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Add(item); }));
-                        i++;
+                        netStream = klientproc.GetStream();
+                        UzupelnijListe((String)binFormatter2.Deserialize(netStream));
+                        refr = 0;
                     }
-
-                    alist.Clear();
-                    procesy = "";
-                    refr = 0;
+                    refr++;
                 }
-                refr++;
+                pictureBox2.Image = (Image)binFormatter.Deserialize(mainStream);                
+                label1.Invoke(new MethodInvoker(delegate { label1.Text = Dns.GetHostEntry(((IPEndPoint)client.Client.RemoteEndPoint).Address).HostName.ToString(); }));
                
-                /////////////////////////////////////////////////
             }
         }
+        private void ReceiveImage2()
+        {
+            BinaryFormatter binFormatter = new BinaryFormatter();
+            BinaryFormatter binFormatter2 = new BinaryFormatter();
 
+            while (client2.Connected)
+            {
+                mainStream2 = client2.GetStream();
+                if (radioButton2.Checked)
+                {
+                    pictureBox1.Image = (Image)binFormatter.Deserialize(mainStream2);
+                    ///////////////////////////////////////////////
+                    // Pobieranie procesow
+                    if (refr % 50 == 0)
+                    {
+                        netStream2 = klientproc2.GetStream();
+                        UzupelnijListe((String)binFormatter2.Deserialize(netStream2));
+                        refr = 0;
+                    }
+                    refr++;
+                }
+                pictureBox3.Image = (Image)binFormatter.Deserialize(mainStream2);
+                label2.Invoke(new MethodInvoker(delegate { label2.Text = Dns.GetHostEntry(((IPEndPoint)client2.Client.RemoteEndPoint).Address).HostName.ToString(); }));
+            }
+        }
+       
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             server = new TcpListener(IPAddress.Any, 1234);
+
+            ///////
+            serverproc = new TcpListener(IPAddress.Any, 3003);
+            ///////
+
             Listetning.Start();
         }
 
@@ -149,8 +165,33 @@ namespace Podstawy_teleinformatyki_Serwer
             base.OnFormClosing(e);
             StopListening();
         }
+       
 
-        
+        //////////////////// 
+        ///// usuwanie/zabijanie procesu
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(listView1.Items.Count>0)
+            {
+                string ProcToKill = listView1.SelectedItems[0].Text;
+              //  textBox1.Text = ProcToKill;
+
+                //Process[] prs = Process.GetProcesses("192.168.2.20");
+                Process[] prs = Process.GetProcessesByName(ProcToKill, "192.168.2.20");
+
+                foreach (Process pr in prs)
+                {
+
+                    //if (pr.ProcessName == ProcToKill)
+                    //{
+                        //pr.Kill();
+                        //pr.WaitForExit();
+                        //pr.Dispose();
+                        listView1.Items.Remove(listView1.SelectedItems[0]);
+                    //}
+                }
+            }
+        }
 
         ///////////////////////////
         ///// sortowanie po kliknieciu na kolumne
@@ -158,6 +199,68 @@ namespace Podstawy_teleinformatyki_Serwer
         {
             this.listView1.ListViewItemSorter = new ListViewItemComparer(e.Column);
         }
+
+        ///////////////////////////
+        ///// wpisywanie procesow do listy
+        private void UzupelnijListe(string path)
+        {
+            string przeslaneprocesy = path;
+
+            int miejsceprzecinka = 0;
+            int miejscesrednika = 0;
+            string proces = "";
+            string PID = "";
+            bool CzySyst = true;
+
+            listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Clear(); }));
+            ArrayList alist = new ArrayList();
+
+            for (int i = 0; i < przeslaneprocesy.Length; i++)
+            {
+
+                if (przeslaneprocesy[i].ToString() == ",")
+                {
+                    proces = przeslaneprocesy.Substring(miejscesrednika + 1, i - miejscesrednika - 1);
+
+                    alist.Add(proces);
+
+                    miejsceprzecinka = i;
+                }
+                if (przeslaneprocesy[i].ToString() == ";")
+                {
+                    PID = przeslaneprocesy.Substring(miejsceprzecinka + 1, i - miejsceprzecinka - 1);
+                    //item.SubItems.Add(PID);
+                    miejscesrednika = i;
+                }
+            }
+            for (int j = 0; j < alist.Count; j++)
+            {
+                ListViewItem item = new ListViewItem(alist[j].ToString());
+                item.ForeColor = Color.Green;
+                for (int g = 0; g < ProcSys.Length; g++)
+                {
+                    if (alist[j].ToString() == ProcSys[g].ToString())
+                    {
+                        item.ForeColor = Color.Green;
+                        item.SubItems.Add("Systemowy");
+                        CzySyst = true;
+                        break;
+                    }
+                    else
+                    {
+                        CzySyst = false;
+                    }
+                }
+                if (CzySyst == false)
+                {
+                    item.ForeColor = Color.Red;
+                    item.SubItems.Add("Inny");
+                }
+
+                listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Add(item); }));
+            }
+        }
+
     }
     
     ///////////////////////////
