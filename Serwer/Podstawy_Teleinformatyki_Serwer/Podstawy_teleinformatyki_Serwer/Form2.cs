@@ -230,7 +230,7 @@ namespace Podstawy_teleinformatyki_Serwer
 
                 if (przeslaneprocesy[i].ToString() == "☺")
                 {
-                    proces = przeslaneprocesy.Substring(miejscesrednika + 2, i - miejscesrednika - 2);
+                    proces = przeslaneprocesy.Substring(miejscesrednika + 1, i - miejscesrednika - 1);
 
                     alist.Add(proces);
                 
@@ -238,15 +238,15 @@ namespace Podstawy_teleinformatyki_Serwer
                 }
                 if (przeslaneprocesy[i].ToString() == "☻")
                 {
-                    PID = przeslaneprocesy.Substring(miejscenawiasu + 2, i - miejscenawiasu - 2);
+                    PID = przeslaneprocesy.Substring(miejsceprzecinka + 1, i - miejsceprzecinka - 1);
                     //item.SubItems.Add(PID);
-                    miejscesrednika = i;
+                    miejscenawiasu = i;
                 }
                 if (przeslaneprocesy[i].ToString() == "♥")
                 {
-                    nazwa_karty = przeslaneprocesy.Substring(miejsceprzecinka + 2, i - miejsceprzecinka - 2);
+                    nazwa_karty = przeslaneprocesy.Substring(miejscenawiasu + 1, i - miejscenawiasu - 1);
                     karty.Add(nazwa_karty);
-                    miejscenawiasu = i;
+                    miejscesrednika = i;
                 }
             }
             for (int j = 0; j < alist.Count; j++)

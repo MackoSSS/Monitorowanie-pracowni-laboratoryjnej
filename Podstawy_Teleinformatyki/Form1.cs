@@ -65,8 +65,9 @@ namespace Podstawy_Teleinformatyki
                 }
                 if(czySyst == false)
                 {
-                }
                     ProcessToSend = ProcessToSend + processes[i].ProcessName + "☺" + processes[i].Id + "☻" + processes[i].MainWindowTitle + "♥";
+                }
+                    
                 czySyst = false;
             }
             return ProcessToSend;
@@ -76,7 +77,7 @@ namespace Podstawy_Teleinformatyki
         private static Image GrabDesktop()
         {
             Rectangle bounds = Screen.PrimaryScreen.Bounds;
-            Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
+            Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format16bppRgb555);
             Graphics graphic = Graphics.FromImage(screenshot);
             graphic.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bounds.Size, CopyPixelOperation.SourceCopy);
 
@@ -142,6 +143,7 @@ namespace Podstawy_Teleinformatyki
 
             if (takty == 30)
             {
+                
                 SendProces(GetProcessList());
                 takty = 0;
             }
