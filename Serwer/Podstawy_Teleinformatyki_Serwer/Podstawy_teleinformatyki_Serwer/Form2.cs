@@ -200,6 +200,11 @@ namespace Podstawy_teleinformatyki_Serwer
             this.listView1.ListViewItemSorter = new ListViewItemComparer(e.Column);
         }
 
+        private void listView2_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            this.listView2.ListViewItemSorter = new ListViewItemComparer(e.Column);
+        }
+
         ///////////////////////////
         ///// wpisywanie procesow do listy
         private void UzupelnijListe(string path)
@@ -208,34 +213,59 @@ namespace Podstawy_teleinformatyki_Serwer
 
             int miejsceprzecinka = 0;
             int miejscesrednika = 0;
+            int miejscenawiasu = 0;
             string proces = "";
             string PID = "";
+            string nazwa_karty = "";
             bool CzySyst = true;
 
             listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Clear(); }));
+            listView2.Invoke(new MethodInvoker(delegate { listView2.Items.Clear(); }));
+       
             ArrayList alist = new ArrayList();
-
+            ArrayList karty = new ArrayList();
+          
             for (int i = 0; i < przeslaneprocesy.Length; i++)
             {
 
-                if (przeslaneprocesy[i].ToString() == ",")
+                if (przeslaneprocesy[i].ToString() == "☺")
                 {
-                    proces = przeslaneprocesy.Substring(miejscesrednika + 1, i - miejscesrednika - 1);
+                    proces = przeslaneprocesy.Substring(miejscesrednika + 2, i - miejscesrednika - 2);
 
                     alist.Add(proces);
-
+                
                     miejsceprzecinka = i;
                 }
-                if (przeslaneprocesy[i].ToString() == ";")
+                if (przeslaneprocesy[i].ToString() == "☻")
                 {
-                    PID = przeslaneprocesy.Substring(miejsceprzecinka + 1, i - miejsceprzecinka - 1);
+                    PID = przeslaneprocesy.Substring(miejscenawiasu + 2, i - miejscenawiasu - 2);
                     //item.SubItems.Add(PID);
                     miejscesrednika = i;
+                }
+                if (przeslaneprocesy[i].ToString() == "♥")
+                {
+                    nazwa_karty = przeslaneprocesy.Substring(miejsceprzecinka + 2, i - miejsceprzecinka - 2);
+                    karty.Add(nazwa_karty);
+                    miejscenawiasu = i;
                 }
             }
             for (int j = 0; j < alist.Count; j++)
             {
+               
                 ListViewItem item = new ListViewItem(alist[j].ToString());
+                ListViewItem item2 = new ListViewItem(alist[j].ToString());
+
+                string str = karty[j].ToString();
+                int i = str.IndexOf('☻');
+                if (i >= 0) str = str.Substring(i + 1);
+
+                if(str != "") item2.SubItems.Add(str);
+
+                if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != ""))
+                {
+                    listView2.Invoke(new MethodInvoker(delegate { listView2.Items.Add((ListViewItem)item2.Clone()); }));
+                }
+
                 item.ForeColor = Color.Green;
                 for (int g = 0; g < ProcSys.Length; g++)
                 {
@@ -258,7 +288,15 @@ namespace Podstawy_teleinformatyki_Serwer
                 }
 
                 listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Add(item); }));
+
+               
+               
             }
+        }
+
+        private void listView2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
     }

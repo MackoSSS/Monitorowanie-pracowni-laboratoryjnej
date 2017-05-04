@@ -38,6 +38,9 @@
             this.TypProcesu = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.Proces = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Karta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -95,7 +98,7 @@
             this.TypProcesu});
             this.listView1.Location = new System.Drawing.Point(268, 454);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(432, 131);
+            this.listView1.Size = new System.Drawing.Size(302, 131);
             this.listView1.TabIndex = 6;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -104,12 +107,12 @@
             // NazwaProcesu
             // 
             this.NazwaProcesu.Text = "Nazwa Procesu";
-            this.NazwaProcesu.Width = 122;
+            this.NazwaProcesu.Width = 173;
             // 
             // TypProcesu
             // 
             this.TypProcesu.Text = "Typ procesu";
-            this.TypProcesu.Width = 90;
+            this.TypProcesu.Width = 129;
             // 
             // radioButton1
             // 
@@ -131,11 +134,35 @@
             this.radioButton2.TabStop = true;
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
+            // listView2
+            // 
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Proces,
+            this.Karta});
+            this.listView2.Location = new System.Drawing.Point(593, 454);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(388, 131);
+            this.listView2.TabIndex = 11;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
+            // 
+            // Proces
+            // 
+            this.Proces.Text = "Nazwa procesu";
+            this.Proces.Width = 92;
+            // 
+            // Karta
+            // 
+            this.Karta.Text = "Aktywna karta";
+            this.Karta.Width = 270;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 607);
+            this.Controls.Add(this.listView2);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.listView1);
@@ -166,6 +193,9 @@
         private System.Windows.Forms.ColumnHeader TypProcesu;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ColumnHeader Proces;
+        private System.Windows.Forms.ColumnHeader Karta;
 
     }
 }

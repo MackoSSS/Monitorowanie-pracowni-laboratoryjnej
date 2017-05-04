@@ -52,6 +52,7 @@ namespace Podstawy_Teleinformatyki
             {
                 for (int j = 0; j < ProcSys.Count(); j++)
                 {
+                  
                     if (processes[i].ProcessName.ToString() == ProcSys[j].ToString())
                     {
                         czySyst = true;
@@ -64,8 +65,8 @@ namespace Podstawy_Teleinformatyki
                 }
                 if(czySyst == false)
                 {
-                    ProcessToSend = ProcessToSend + processes[i].ProcessName + "," + processes[i].Id + ";";
                 }
+                    ProcessToSend = ProcessToSend + processes[i].ProcessName + "☺" + processes[i].Id + "☻" + processes[i].MainWindowTitle + "♥";
                 czySyst = false;
             }
             return ProcessToSend;
