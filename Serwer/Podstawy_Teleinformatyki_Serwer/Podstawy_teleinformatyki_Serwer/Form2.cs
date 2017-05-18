@@ -116,6 +116,7 @@ namespace Podstawy_teleinformatyki_Serwer
                 if (radioButton1.Checked)
                 {
                     pictureBox1.Image = (Image)binFormatter.Deserialize(mainStream);
+                    mainStream.Flush();
                     ///////////////////////////////////////////////
                     // Pobieranie procesow
                     if (refr % 50 == 0)
@@ -139,7 +140,8 @@ namespace Podstawy_teleinformatyki_Serwer
                 //CzyUruchomionyZakazany((String)binFormatter2.Deserialize(netStream), 1);
                 //netStream.Flush();
 
-                pictureBox2.Image = (Image)binFormatter.Deserialize(mainStream);                
+                pictureBox2.Image = (Image)binFormatter.Deserialize(mainStream);
+                mainStream.Flush();
                 label1.Invoke(new MethodInvoker(delegate { label1.Text = Dns.GetHostEntry(((IPEndPoint)client.Client.RemoteEndPoint).Address).HostName.ToString(); }));
 
                 
@@ -358,7 +360,7 @@ namespace Podstawy_teleinformatyki_Serwer
                 {
                     nazwa_karty = przeslaneprocesy.Substring(miejscenawiasu + 1, i - miejscenawiasu - 1);
                     karty.Add(nazwa_karty);
-                    
+                    karty.Add(DateTime.Now);
                     miejscesrednika = i;
                 }
             }
@@ -368,11 +370,6 @@ namespace Podstawy_teleinformatyki_Serwer
 
                 ListViewItem item = new ListViewItem(alist[j].ToString());
                 ListViewItem item2 = new ListViewItem(alist[j].ToString());
-                ListViewItem czas = new ListViewItem();
-                String teraz = DateTime.Now.ToString();
-                var listViewItem = new ListViewItem(teraz);
-                //czas.SubItems.Add(teraz);
-                item2.SubItems.Add(teraz);
 
                 string str = karty[j].ToString();
                 int i = str.IndexOf('☻');
@@ -380,11 +377,9 @@ namespace Podstawy_teleinformatyki_Serwer
 
                 if (str != "") item2.SubItems.Add(str);
 
-                if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != "") || (alist[j].ToString() == "opera" && str != "") || (alist[j].ToString() == "iexplorer" && str != ""))
+                if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != ""))
                 {
-                    listView2.Invoke(new MethodInvoker(delegate { listView2.Items.Add(item2); }));
                     listView2.Invoke(new MethodInvoker(delegate { listView2.Items.Add((ListViewItem)item2.Clone()); }));
-               
                 }
 
                 item.ForeColor = Color.Green;
