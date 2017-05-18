@@ -125,7 +125,6 @@ namespace Podstawy_Teleinformatyki
 
         public Form1()
         {
-            Monit("Wyłącz to!");
             InitializeComponent();
         }
 
