@@ -25,18 +25,19 @@ namespace Podstawy_Teleinformatyki
     {
         private readonly TcpClient client = new TcpClient();
         private NetworkStream mainStream;
+        private Stream s;
         private int portNumber;
-        
+
 
         /////////
         private readonly TcpClient klientproc = new TcpClient();
         private NetworkStream netStream;
         private int portNumberProc;
-        int takty = 30;
+        int takty = 50;
 
         string nazwapliku = "";
 
-        string[] ProcSys = { "spoolsv", "AvastSvc", "avastui", "conhost" , "svchost", "winlogon", "RtHDVCpl", "LogonUI", "csrss", "WUDFHost", "taskhostw", "wininit", "NisSrv", "sihost", "dwm", "app_updater", "SearchUI", "armsvc", "lsass", "MsMpEng", "explorer", "dllhost", "mmc", "services", "ShellExperienceHost", "audiodg", "RuntimeBroker", "sqlwriter", "smss", "System" };
+        string[] ProcSys = { "spoolsv", "AvastSvc", "avastui", "conhost", "svchost", "winlogon", "RtHDVCpl", "LogonUI", "csrss", "WUDFHost", "taskhostw", "wininit", "NisSrv", "sihost", "dwm", "app_updater", "SearchUI", "armsvc", "lsass", "MsMpEng", "explorer", "dllhost", "mmc", "services", "ShellExperienceHost", "audiodg", "RuntimeBroker", "sqlwriter", "smss", "System" };
 
         /////////
         bool czySyst = false;
@@ -46,13 +47,14 @@ namespace Podstawy_Teleinformatyki
         private string GetProcessList()
         {
             Process[] processes = Process.GetProcesses();
-            string ProcessToSend="";
+            string ProcessToSend = "";
 
             for (int i = 0; i < processes.Count(); i++)
             {
+                if (processes[i].ProcessName.ToString() == "notepad")
+                    Monit("Wyłącz");
                 for (int j = 0; j < ProcSys.Count(); j++)
                 {
-                  
                     if (processes[i].ProcessName.ToString() == ProcSys[j].ToString())
                     {
                         czySyst = true;
@@ -61,13 +63,12 @@ namespace Podstawy_Teleinformatyki
                     else
                     {
                         czySyst = false;
-                    }                 
+                    }
                 }
-                if(czySyst == false)
+                if (czySyst == false)
                 {
                     ProcessToSend = ProcessToSend + processes[i].ProcessName + "☺" + processes[i].Id + "☻" + processes[i].MainWindowTitle + "♥";
                 }
-                    
                 czySyst = false;
             }
             return ProcessToSend;
@@ -77,18 +78,31 @@ namespace Podstawy_Teleinformatyki
         private static Image GrabDesktop()
         {
             Rectangle bounds = Screen.PrimaryScreen.Bounds;
-            Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format16bppRgb555);
+            Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
             Graphics graphic = Graphics.FromImage(screenshot);
             graphic.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bounds.Size, CopyPixelOperation.SourceCopy);
-
             return screenshot;
         }
+
+        public Stream ConvertImage()
+        {
+            var image = GrabDesktop();
+
+            var stream = new MemoryStream();
+            image.Save(stream, ImageFormat.Jpeg);
+            stream.Position = 0;
+            return stream;
+        }
+
+
         int nr = 0;
         private void SendDesktopImage()
         {
             BinaryFormatter binFormatter = new BinaryFormatter();
+            var image = Image.FromStream(ConvertImage());
             mainStream = client.GetStream();
-            binFormatter.Serialize(mainStream, GrabDesktop());
+
+            binFormatter.Serialize(mainStream, image);
         }
 
         ///////////////////////////
@@ -101,8 +115,17 @@ namespace Podstawy_Teleinformatyki
             nr++;
         }
 
+        public void Monit(string message)
+        {
+            if (Process.GetProcessesByName("notepad").Any())
+            {
+                MessageBox.Show(message);
+            }
+        }
+
         public Form1()
         {
+            Monit("Wyłącz to!");
             InitializeComponent();
         }
 
@@ -117,7 +140,7 @@ namespace Podstawy_Teleinformatyki
 
                 MessageBox.Show("Connected!");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("Failed to connect...");
             }
@@ -130,7 +153,7 @@ namespace Podstawy_Teleinformatyki
                 timer1.Start();
                 button2.Text = "Stop sharing";
             }
-            else 
+            else
             {
                 timer1.Stop();
                 button2.Text = "Share my desktop";
@@ -141,15 +164,14 @@ namespace Podstawy_Teleinformatyki
         {
             SendDesktopImage();
 
-            if (takty == 30)
+            if (takty == 50)
             {
-                
                 SendProces(GetProcessList());
                 takty = 0;
             }
             takty++;
 
-            
+
         }
     }
 }

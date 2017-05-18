@@ -38,12 +38,24 @@
             this.TypProcesu = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.checkBoxNotatnik = new System.Windows.Forms.CheckBox();
+            this.checkBoxKalkulator = new System.Windows.Forms.CheckBox();
+            this.checkBoxMozilla = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.listView2 = new System.Windows.Forms.ListView();
             this.Proces = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Karta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Czas = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -67,7 +79,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(181, 59);
+            this.label1.Location = new System.Drawing.Point(181, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 2;
@@ -85,7 +97,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(181, 159);
+            this.label2.Location = new System.Drawing.Point(181, 121);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 4;
@@ -98,7 +110,7 @@
             this.TypProcesu});
             this.listView1.Location = new System.Drawing.Point(268, 454);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(302, 131);
+            this.listView1.Size = new System.Drawing.Size(296, 131);
             this.listView1.TabIndex = 6;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -107,17 +119,17 @@
             // NazwaProcesu
             // 
             this.NazwaProcesu.Text = "Nazwa Procesu";
-            this.NazwaProcesu.Width = 173;
+            this.NazwaProcesu.Width = 152;
             // 
             // TypProcesu
             // 
             this.TypProcesu.Text = "Typ procesu";
-            this.TypProcesu.Width = 129;
+            this.TypProcesu.Width = 139;
             // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(184, 75);
+            this.radioButton1.Location = new System.Drawing.Point(184, 28);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(14, 13);
             this.radioButton1.TabIndex = 9;
@@ -127,35 +139,123 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(184, 175);
+            this.radioButton2.Location = new System.Drawing.Point(184, 137);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(14, 13);
             this.radioButton2.TabIndex = 10;
             this.radioButton2.TabStop = true;
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Location = new System.Drawing.Point(184, 56);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox4.TabIndex = 11;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Location = new System.Drawing.Point(184, 165);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox5.TabIndex = 12;
+            this.pictureBox5.TabStop = false;
+            // 
+            // checkBoxNotatnik
+            // 
+            this.checkBoxNotatnik.AutoSize = true;
+            this.checkBoxNotatnik.Location = new System.Drawing.Point(819, 493);
+            this.checkBoxNotatnik.Name = "checkBoxNotatnik";
+            this.checkBoxNotatnik.Size = new System.Drawing.Size(66, 17);
+            this.checkBoxNotatnik.TabIndex = 13;
+            this.checkBoxNotatnik.Text = "Notatnik";
+            this.checkBoxNotatnik.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxKalkulator
+            // 
+            this.checkBoxKalkulator.AutoSize = true;
+            this.checkBoxKalkulator.Location = new System.Drawing.Point(819, 516);
+            this.checkBoxKalkulator.Name = "checkBoxKalkulator";
+            this.checkBoxKalkulator.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxKalkulator.TabIndex = 14;
+            this.checkBoxKalkulator.Text = "Kalkulator";
+            this.checkBoxKalkulator.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMozilla
+            // 
+            this.checkBoxMozilla.AutoSize = true;
+            this.checkBoxMozilla.Location = new System.Drawing.Point(819, 539);
+            this.checkBoxMozilla.Name = "checkBoxMozilla";
+            this.checkBoxMozilla.Size = new System.Drawing.Size(92, 17);
+            this.checkBoxMozilla.TabIndex = 15;
+            this.checkBoxMozilla.Text = "Mozilla Firefox";
+            this.checkBoxMozilla.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.Location = new System.Drawing.Point(772, 470);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(149, 20);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Zabronione procesy";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(953, 493);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 63);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "Aktualizuj zakazane procesy";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(26, 505);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(190, 72);
+            this.textBox1.TabIndex = 18;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(819, 567);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.TabIndex = 19;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // listView2
             // 
             this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Proces,
-            this.Karta});
-            this.listView2.Location = new System.Drawing.Point(593, 454);
+            this.Karta,
+            this.Czas});
+            this.listView2.Location = new System.Drawing.Point(596, 454);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(388, 131);
-            this.listView2.TabIndex = 11;
+            this.listView2.Size = new System.Drawing.Size(170, 131);
+            this.listView2.TabIndex = 20;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
-            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
             // 
             // Proces
             // 
-            this.Proces.Text = "Nazwa procesu";
-            this.Proces.Width = 92;
+            this.Proces.Text = "Nazwa Procesu";
+            this.Proces.Width = 104;
             // 
             // Karta
             // 
             this.Karta.Text = "Aktywna karta";
-            this.Karta.Width = 270;
+            this.Karta.Width = 139;
+            // 
+            // Czas
+            // 
+            this.Czas.Text = "Czas";
             // 
             // Form2
             // 
@@ -163,6 +263,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 607);
             this.Controls.Add(this.listView2);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.checkBoxMozilla);
+            this.Controls.Add(this.checkBoxKalkulator);
+            this.Controls.Add(this.checkBoxNotatnik);
+            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.listView1);
@@ -176,6 +285,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,9 +304,19 @@
         private System.Windows.Forms.ColumnHeader TypProcesu;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.CheckBox checkBoxNotatnik;
+        private System.Windows.Forms.CheckBox checkBoxKalkulator;
+        private System.Windows.Forms.CheckBox checkBoxMozilla;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.ColumnHeader Proces;
         private System.Windows.Forms.ColumnHeader Karta;
+        private System.Windows.Forms.ColumnHeader Czas;
 
     }
 }
