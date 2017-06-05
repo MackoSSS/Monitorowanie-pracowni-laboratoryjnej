@@ -116,6 +116,7 @@ namespace Podstawy_teleinformatyki_Serwer
                 if (radioButton1.Checked)
                 {
                     pictureBox1.Image = (Image)binFormatter.Deserialize(mainStream);
+                    mainStream.Flush();
                     ///////////////////////////////////////////////
                     // Pobieranie procesow
                     if (refr % 50 == 0)
@@ -140,7 +141,11 @@ namespace Podstawy_teleinformatyki_Serwer
                
 
                 pictureBox2.Image = (Image)binFormatter.Deserialize(mainStream);
+<<<<<<< HEAD
                 netStream.Flush();
+=======
+                mainStream.Flush();
+>>>>>>> origin/master
                 label1.Invoke(new MethodInvoker(delegate { label1.Text = Dns.GetHostEntry(((IPEndPoint)client.Client.RemoteEndPoint).Address).HostName.ToString(); }));
 
                 
@@ -434,7 +439,7 @@ namespace Podstawy_teleinformatyki_Serwer
                 {
                     nazwa_karty = przeslaneprocesy.Substring(miejscenawiasu + 1, i - miejscenawiasu - 1);
                     karty.Add(nazwa_karty);
-                    
+                    karty.Add(DateTime.Now);
                     miejscesrednika = i;
                 }
             }
@@ -444,10 +449,13 @@ namespace Podstawy_teleinformatyki_Serwer
 
                 ListViewItem item = new ListViewItem(alist[j].ToString());
                 ListViewItem item2 = new ListViewItem(alist[j].ToString());
+<<<<<<< HEAD
      
                 String teraz = DateTime.Now.ToString("H:mm:ss");
                 //czas.SubItems.Add(teraz);
                
+=======
+>>>>>>> origin/master
 
                 string str = karty[j].ToString();
                 int i = str.IndexOf('☻');
@@ -457,6 +465,7 @@ namespace Podstawy_teleinformatyki_Serwer
                 item2.SubItems.Add(teraz);
                 string path2 = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 
+<<<<<<< HEAD
                 if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != "") || (alist[j].ToString() == "opera" && str != "") || (alist[j].ToString() == "iexplore" && str != ""))
                 {
 
@@ -465,6 +474,11 @@ namespace Podstawy_teleinformatyki_Serwer
                         listView2.Items.Insert(0, (ListViewItem)item2.Clone());
 
                     }));
+=======
+                if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != ""))
+                {
+                    listView2.Invoke(new MethodInvoker(delegate { listView2.Items.Add((ListViewItem)item2.Clone()); }));
+>>>>>>> origin/master
                 }
 
                 item.ForeColor = Color.Green;

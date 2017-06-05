@@ -125,10 +125,7 @@ namespace Podstawy_Teleinformatyki
 
         public Form1()
         {
-<<<<<<< HEAD
             //Monit("Wyłącz to!");
-=======
->>>>>>> origin/master
             InitializeComponent();
             Console.WriteLine(Dns.GetHostName());
             IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
