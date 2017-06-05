@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
+            this.lb_IP = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -41,21 +42,33 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // lb_IP
+            // 
+            this.lb_IP.AutoSize = true;
+            this.lb_IP.Location = new System.Drawing.Point(13, 237);
+            this.lb_IP.Name = "lb_IP";
+            this.lb_IP.Size = new System.Drawing.Size(31, 13);
+            this.lb_IP.TabIndex = 1;
+            this.lb_IP.Text = "lb_IP";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.lb_IP);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lb_IP;
     }
 }
 

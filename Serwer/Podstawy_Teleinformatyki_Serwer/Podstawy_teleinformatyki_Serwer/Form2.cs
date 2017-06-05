@@ -137,9 +137,10 @@ namespace Podstawy_teleinformatyki_Serwer
                 }
 
                 //CzyUruchomionyZakazany((String)binFormatter2.Deserialize(netStream), 1);
-                //netStream.Flush();
+               
 
-                pictureBox2.Image = (Image)binFormatter.Deserialize(mainStream);                
+                pictureBox2.Image = (Image)binFormatter.Deserialize(mainStream);
+                netStream.Flush();
                 label1.Invoke(new MethodInvoker(delegate { label1.Text = Dns.GetHostEntry(((IPEndPoint)client.Client.RemoteEndPoint).Address).HostName.ToString(); }));
 
                 
@@ -175,14 +176,15 @@ namespace Podstawy_teleinformatyki_Serwer
                 {
                     if (refrzakaz % 50 == 0)
                     {
-                        CzyUruchomionyZakazany((String)binFormatter2.Deserialize(netStream), 2);
+                        CzyUruchomionyZakazany((String)binFormatter2.Deserialize(netStream2), 2);
                         
                     }
                     
                 }
-                netStream2.Flush();
+                
 
                 pictureBox3.Image = (Image)binFormatter.Deserialize(mainStream2);
+                netStream2.Flush();
                 label2.Invoke(new MethodInvoker(delegate { label2.Text = Dns.GetHostEntry(((IPEndPoint)client2.Client.RemoteEndPoint).Address).HostName.ToString(); }));
             }
         }
@@ -211,6 +213,11 @@ namespace Podstawy_teleinformatyki_Serwer
         private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             this.listView1.ListViewItemSorter = new ListViewItemComparer(e.Column);
+        }
+
+        private void listView2_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            this.listView2.ListViewItemSorter = new ListViewItemComparer(e.Column);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -255,18 +262,27 @@ namespace Podstawy_teleinformatyki_Serwer
 
             int miejsceprzecinka = 0;
             int miejscesrednika = 0;
+            //int miejsceprzecinka = 0;
+            //int miejscesrednika = 0;
+            int miejscenawiasu = 0;
             string proces = "";
             string PID = "";
             bool CzySyst = true;
             bool CzyZakazany = false;
             int lZakazanych = 0;
+            string nazwa_karty = "";
 
+            if (!checkBox1.Checked)
+            {
+                listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Clear(); }));
+            }
             ArrayList alist = new ArrayList();
+            ArrayList karty = new ArrayList();
 
             for (int i = 0; i < przeslaneprocesy.Length; i++)
             {
 
-                if (przeslaneprocesy[i].ToString() == ",")
+                if (przeslaneprocesy[i].ToString() == "☺")
                 {
                     proces = przeslaneprocesy.Substring(miejscesrednika + 1, i - miejscesrednika - 1);
 
@@ -274,9 +290,17 @@ namespace Podstawy_teleinformatyki_Serwer
 
                     miejsceprzecinka = i;
                 }
-                if (przeslaneprocesy[i].ToString() == ";")
+                if (przeslaneprocesy[i].ToString() == "☻")
                 {
                     PID = przeslaneprocesy.Substring(miejsceprzecinka + 1, i - miejsceprzecinka - 1);
+                    //item.SubItems.Add(PID);
+                    miejscenawiasu = i;
+                }
+                if (przeslaneprocesy[i].ToString() == "♥")
+                {
+                    nazwa_karty = przeslaneprocesy.Substring(miejscenawiasu + 1, i - miejscenawiasu - 1);
+                    karty.Add(nazwa_karty);
+
                     miejscesrednika = i;
                 }
             }
@@ -303,6 +327,51 @@ namespace Podstawy_teleinformatyki_Serwer
                         CzyZakazany = false;
                     }
                 }
+
+                ListViewItem item = new ListViewItem(alist[j].ToString());
+                ListViewItem item2 = new ListViewItem(alist[j].ToString());
+
+                String teraz = DateTime.Now.ToString("H:mm:ss");
+                //czas.SubItems.Add(teraz);
+
+                int id_k;
+                string str = karty[j].ToString();
+                int i = str.IndexOf('☻');
+                if (i >= 0) str = str.Substring(i + 1);
+
+                if (str != "") item2.SubItems.Add(str);
+                item2.SubItems.Add(teraz);
+                item2.SubItems.Add(idKomputera.ToString());
+                string path2 = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+
+                if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != "") || (alist[j].ToString() == "opera" && str != "") || (alist[j].ToString() == "iexplore" && str != ""))
+                {
+
+                    listView3.Invoke(new MethodInvoker(delegate
+                    {
+                        listView3.Items.Insert(0, (ListViewItem)item2.Clone());
+
+                        using (StreamWriter writer = new StreamWriter(@path2 + "/log_"+idKomputera+".txt"))
+                        {
+                            StringBuilder line = new StringBuilder();
+                            foreach (ListViewItem itemy in listView3.Items)
+                            {
+                                if (itemy.SubItems[3].Text == idKomputera.ToString())
+                                {
+                                    line.Clear();
+                                    for (int p = 0; p < itemy.SubItems.Count; p++)
+                                    {
+                                        if (p > 0)
+                                            line.Append("|   ");
+                                        line.Append(itemy.SubItems[p].Text);
+                                    }
+                                    writer.WriteLine(line);
+                                }
+                            }
+                        }
+
+                    }));
+                }
             }
             if (lZakazanych == 0)
             {
@@ -315,6 +384,13 @@ namespace Podstawy_teleinformatyki_Serwer
                     pictureBox5.Image = null;
                 }
             }
+        }
+
+        private void Zapisz_log()
+        {
+            
+            
+            
         }
 
         ///////////////////////////
@@ -333,7 +409,7 @@ namespace Podstawy_teleinformatyki_Serwer
             int lZakazanych = 0;
             string nazwa_karty = "";
 
-            listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Clear(); }));
+            listView1.Invoke(new MethodInvoker(delegate { listView1.Items.Clear(); }));      
             ArrayList alist = new ArrayList();
             ArrayList karty = new ArrayList();
 
@@ -368,23 +444,27 @@ namespace Podstawy_teleinformatyki_Serwer
 
                 ListViewItem item = new ListViewItem(alist[j].ToString());
                 ListViewItem item2 = new ListViewItem(alist[j].ToString());
-                ListViewItem czas = new ListViewItem();
-                String teraz = DateTime.Now.ToString();
-                var listViewItem = new ListViewItem(teraz);
+     
+                String teraz = DateTime.Now.ToString("H:mm:ss");
                 //czas.SubItems.Add(teraz);
-                item2.SubItems.Add(teraz);
+               
 
                 string str = karty[j].ToString();
                 int i = str.IndexOf('☻');
                 if (i >= 0) str = str.Substring(i + 1);
 
                 if (str != "") item2.SubItems.Add(str);
+                item2.SubItems.Add(teraz);
+                string path2 = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 
-                if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != "") || (alist[j].ToString() == "opera" && str != "") || (alist[j].ToString() == "iexplorer" && str != ""))
+                if ((alist[j].ToString() == "firefox" && str != "") || (alist[j].ToString() == "chrome" && str != "") || (alist[j].ToString() == "opera" && str != "") || (alist[j].ToString() == "iexplore" && str != ""))
                 {
-                    listView2.Invoke(new MethodInvoker(delegate { listView2.Items.Add(item2); }));
-                    listView2.Invoke(new MethodInvoker(delegate { listView2.Items.Add((ListViewItem)item2.Clone()); }));
-               
+
+                    listView2.Invoke(new MethodInvoker(delegate
+                    {
+                        listView2.Items.Insert(0, (ListViewItem)item2.Clone());
+
+                    }));
                 }
 
                 item.ForeColor = Color.Green;
@@ -446,7 +526,7 @@ namespace Podstawy_teleinformatyki_Serwer
             }
         }
 
-        
+
 
     }
     
@@ -468,6 +548,7 @@ namespace Podstawy_teleinformatyki_Serwer
             return String.Compare(((ListViewItem)x).SubItems[col].Text, ((ListViewItem)y).SubItems[col].Text);
         }
     }
+
 
     ///////////////////////////
 }

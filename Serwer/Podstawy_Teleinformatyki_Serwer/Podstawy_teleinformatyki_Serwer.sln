@@ -1,14 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podstawy_teleinformatyki_Serwer", "Podstawy_teleinformatyki_Serwer\Podstawy_teleinformatyki_Serwer.csproj", "{DF54DDFF-05C1-4A6D-802A-CDCA6162BEFB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{82752186-3D3B-43C2-BCDD-C22F506A9D23} = {82752186-3D3B-43C2-BCDD-C22F506A9D23}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podstawy_Teleinformatyki", "..\..\Podstawy_Teleinformatyki\Podstawy_Teleinformatyki.csproj", "{82752186-3D3B-43C2-BCDD-C22F506A9D23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podstawy_Teleinformatyki", "..\Podstawy_Teleinformatyki\Podstawy_Teleinformatyki\Podstawy_Teleinformatyki.csproj", "{82752186-3D3B-43C2-BCDD-C22F506A9D23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

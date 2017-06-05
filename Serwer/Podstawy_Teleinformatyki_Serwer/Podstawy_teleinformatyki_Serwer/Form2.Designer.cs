@@ -51,6 +51,7 @@
             this.Proces = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Karta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Czas = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listView3 = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -110,7 +111,7 @@
             this.TypProcesu});
             this.listView1.Location = new System.Drawing.Point(268, 454);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(296, 131);
+            this.listView1.Size = new System.Drawing.Size(214, 131);
             this.listView1.TabIndex = 6;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -119,12 +120,12 @@
             // NazwaProcesu
             // 
             this.NazwaProcesu.Text = "Nazwa Procesu";
-            this.NazwaProcesu.Width = 152;
+            this.NazwaProcesu.Width = 125;
             // 
             // TypProcesu
             // 
             this.TypProcesu.Text = "Typ procesu";
-            this.TypProcesu.Width = 139;
+            this.TypProcesu.Width = 111;
             // 
             // radioButton1
             // 
@@ -165,7 +166,7 @@
             // checkBoxNotatnik
             // 
             this.checkBoxNotatnik.AutoSize = true;
-            this.checkBoxNotatnik.Location = new System.Drawing.Point(819, 493);
+            this.checkBoxNotatnik.Location = new System.Drawing.Point(833, 493);
             this.checkBoxNotatnik.Name = "checkBoxNotatnik";
             this.checkBoxNotatnik.Size = new System.Drawing.Size(66, 17);
             this.checkBoxNotatnik.TabIndex = 13;
@@ -175,7 +176,7 @@
             // checkBoxKalkulator
             // 
             this.checkBoxKalkulator.AutoSize = true;
-            this.checkBoxKalkulator.Location = new System.Drawing.Point(819, 516);
+            this.checkBoxKalkulator.Location = new System.Drawing.Point(833, 516);
             this.checkBoxKalkulator.Name = "checkBoxKalkulator";
             this.checkBoxKalkulator.Size = new System.Drawing.Size(73, 17);
             this.checkBoxKalkulator.TabIndex = 14;
@@ -185,7 +186,7 @@
             // checkBoxMozilla
             // 
             this.checkBoxMozilla.AutoSize = true;
-            this.checkBoxMozilla.Location = new System.Drawing.Point(819, 539);
+            this.checkBoxMozilla.Location = new System.Drawing.Point(833, 539);
             this.checkBoxMozilla.Name = "checkBoxMozilla";
             this.checkBoxMozilla.Size = new System.Drawing.Size(92, 17);
             this.checkBoxMozilla.TabIndex = 15;
@@ -196,7 +197,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(772, 470);
+            this.label3.Location = new System.Drawing.Point(832, 470);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(149, 20);
             this.label3.TabIndex = 16;
@@ -204,7 +205,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(953, 493);
+            this.button1.Location = new System.Drawing.Point(996, 505);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 63);
             this.button1.TabIndex = 17;
@@ -214,20 +215,19 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(26, 505);
-            this.textBox1.Multiline = true;
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(190, 72);
-            this.textBox1.TabIndex = 18;
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 21;
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(819, 567);
+            this.checkBox1.Location = new System.Drawing.Point(833, 562);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.Size = new System.Drawing.Size(100, 17);
             this.checkBox1.TabIndex = 19;
-            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.Text = "Monitoring w tle";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // listView2
@@ -236,32 +236,45 @@
             this.Proces,
             this.Karta,
             this.Czas});
-            this.listView2.Location = new System.Drawing.Point(596, 454);
+            this.listView2.Location = new System.Drawing.Point(502, 454);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(170, 131);
+            this.listView2.Size = new System.Drawing.Size(312, 131);
             this.listView2.TabIndex = 20;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
+            this.listView2.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView2_ColumnClick);
             // 
             // Proces
             // 
             this.Proces.Text = "Nazwa Procesu";
-            this.Proces.Width = 104;
+            this.Proces.Width = 90;
             // 
             // Karta
             // 
             this.Karta.Text = "Aktywna karta";
-            this.Karta.Width = 139;
+            this.Karta.Width = 153;
             // 
             // Czas
             // 
             this.Czas.Text = "Czas";
+            this.Czas.Width = 103;
+            // 
+            // listView3
+            // 
+            this.listView3.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.listView3.Location = new System.Drawing.Point(12, 413);
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(121, 97);
+            this.listView3.TabIndex = 22;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.Visible = false;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 607);
+            this.Controls.Add(this.listView3);
             this.Controls.Add(this.listView2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox1);
@@ -317,6 +330,7 @@
         private System.Windows.Forms.ColumnHeader Proces;
         private System.Windows.Forms.ColumnHeader Karta;
         private System.Windows.Forms.ColumnHeader Czas;
+        private System.Windows.Forms.ListView listView3;
 
     }
 }

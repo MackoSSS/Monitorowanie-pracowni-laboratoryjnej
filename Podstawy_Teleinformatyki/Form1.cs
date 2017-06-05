@@ -51,8 +51,8 @@ namespace Podstawy_Teleinformatyki
 
             for (int i = 0; i < processes.Count(); i++)
             {
-                if (processes[i].ProcessName.ToString() == "notepad")
-                    Monit("Wyłącz");
+                //if (processes[i].ProcessName.ToString() == "notepad")
+                    //Monit("Wyłącz");
                 for (int j = 0; j < ProcSys.Count(); j++)
                 {
                     if (processes[i].ProcessName.ToString() == ProcSys[j].ToString())
@@ -125,8 +125,14 @@ namespace Podstawy_Teleinformatyki
 
         public Form1()
         {
-            Monit("Wyłącz to!");
+            //Monit("Wyłącz to!");
             InitializeComponent();
+            Console.WriteLine(Dns.GetHostName());
+            IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
+            foreach (IPAddress addr in localIPs)
+            {
+                lb_IP.Text = addr.ToString();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -151,12 +157,16 @@ namespace Podstawy_Teleinformatyki
             if (button2.Text.StartsWith("Share"))
             {
                 timer1.Start();
+              
                 button2.Text = "Stop sharing";
+                
             }
             else
             {
                 timer1.Stop();
+            
                 button2.Text = "Share my desktop";
+               
             }
         }
 
@@ -170,8 +180,16 @@ namespace Podstawy_Teleinformatyki
                 takty = 0;
             }
             takty++;
+        }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+           
         }
     }
 }
